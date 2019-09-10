@@ -1,6 +1,7 @@
 $script = <<SCRIPT
 sudo cp /home/vagrant/nerootca2042.crt /etc/pki/ca-trust/source/anchors/nerootca2042.crt
 sudo cp /home/vagrant/kubernetes.repo /etc/yum.repos.d/kubernetes.repo
+sudo cp /home/vagrant/k8s.conf /etc/sysctl.d/k8s.conf
 sudo update-ca-trust extract
 sudo yum update
 SCRIPT
@@ -12,6 +13,7 @@ sudo setenforce 0
 sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
 sudo systemctl enable --now kubelet
+sudo sysctl --system
 SCRIPT
 
 Vagrant.configure("2") do |config|
@@ -28,6 +30,7 @@ Vagrant.configure("2") do |config|
 	vm1.vm.network "private_network", bridge: "Interne Partagé avec VLL_SI_CGI"
 	vm1.vm.provision "file", source: "nerootca2042.crt", destination: "/home/vagrant/nerootca2042.crt"
 	vm1.vm.provision "file", source: "kubernetes.repo", destination: "/home/vagrant/kubernetes.repo"
+	vm1.vm.provision "file", source: "k8s.conf", destination: "/home/vagrant/k8s.conf"
 	vm1.vm.provision "shell", inline: $script
 	vm1.vm.provision "docker"
 	vm1.vm.provision "shell", inline: $script2
