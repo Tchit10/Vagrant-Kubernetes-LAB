@@ -17,6 +17,7 @@ Vagrant.configure("2") do |config|
 	vm1.vm.hostname = "vm1"
 	vm1.vm.network "private_network", bridge: "Interne Partagé avec VLL_SI_CGI"
 	vm1.vm.provision "file", source: "nerootca2042.crt", destination: "/home/vagrant/nerootca2042.crt"
+	vm1.vm.provision "file", source: "kubernetes.repo", destination: "/etc/yum.repos.d/kubernetes.repo"
 	vm1.vm.provision "shell", inline: $script
 	vm1.vm.provision "docker"
   end
