@@ -1,7 +1,6 @@
 $script = <<SCRIPT
 sudo cp /home/vagrant/kubernetes.repo /etc/yum.repos.d/kubernetes.repo
 sudo cp /home/vagrant/k8s.conf /etc/sysctl.d/k8s.conf
-sudo update-ca-trust extract
 sudo yum update -y
 SCRIPT
 
