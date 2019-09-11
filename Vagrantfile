@@ -39,27 +39,37 @@ Vagrant.configure("2") do |config|
   config.vm.define "vm2" do |vm2|
     vm2.vm.provider :hyperv do |hyperv|
 	  hyperv.vmname = "vm2"
+	  hyperv.memory = 2048
+	  hyperv.cpus = 2
 	end
 	vm2.vm.box_download_ca_cert = "nerootca2042.crt"
 	vm2.vm.box = "centos/7"
 	vm2.vm.hostname = "vm2"
 	vm2.vm.network "private_network", bridge: "Interne Partagé avec VLL_SI_CGI"
 	vm2.vm.provision "file", source: "nerootca2042.crt", destination: "/home/vagrant/nerootca2042.crt"
+	vm2.vm.provision "file", source: "kubernetes.repo", destination: "/home/vagrant/kubernetes.repo"
+	vm2.vm.provision "file", source: "k8s.conf", destination: "/home/vagrant/k8s.conf"
 	vm2.vm.provision "shell", inline: $script
 	vm2.vm.provision "docker"
+	vm2.vm.provision "shell", inline: $script2
   end
   
   config.vm.define "vm3" do |vm3|
 	vm3.vm.provider :hyperv do |hyperv|
 	  hyperv.vmname = "vm3"
+          hyperv.memory = 2048
+	  hyperv.cpus = 2
 	end
 	vm3.vm.box_download_ca_cert = "nerootca2042.crt"
 	vm3.vm.box = "centos/7"
 	vm3.vm.hostname = "vm3"
 	vm3.vm.network "private_network", bridge: "Interne Partagé avec VLL_SI_CGI"
 	vm3.vm.provision "file", source: "nerootca2042.crt", destination: "/home/vagrant/nerootca2042.crt"
+	vm3.vm.provision "file", source: "kubernetes.repo", destination: "/home/vagrant/kubernetes.repo"
+	vm3.vm.provision "file", source: "k8s.conf", destination: "/home/vagrant/k8s.conf"
 	vm3.vm.provision "shell", inline: $script
 	vm3.vm.provision "docker"
+	vm3.vm.provision "shell", inline: $script2
   end
 
 end
