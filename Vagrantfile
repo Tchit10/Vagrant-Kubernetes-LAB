@@ -3,12 +3,12 @@ sudo cp /home/vagrant/nerootca2042.crt /etc/pki/ca-trust/source/anchors/nerootca
 sudo cp /home/vagrant/kubernetes.repo /etc/yum.repos.d/kubernetes.repo
 sudo cp /home/vagrant/k8s.conf /etc/sysctl.d/k8s.conf
 sudo update-ca-trust extract
-sudo yum update
+sudo yum update -y
 SCRIPT
 
 $script2 = <<SCRIPT
 sudo swapoff -a
-sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+sudo sed -i 's/swapfile/#swapfile/' /etc/fstab
 sudo setenforce 0
 sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
