@@ -9,7 +9,7 @@ sudo swapoff -a
 sudo sed -i 's/swapfile/#swapfile/' /etc/fstab
 sudo setenforce 0
 sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
-sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+sudo yum install -y git kubelet kubeadm kubectl --disableexcludes=kubernetes
 sudo systemctl enable --now kubelet
 sudo sysctl --system
 SCRIPT
